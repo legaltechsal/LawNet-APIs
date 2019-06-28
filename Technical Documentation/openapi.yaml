@@ -1,56 +1,41 @@
 openapi: 3.0.0
 info:
   title: Singapore Academy of Law (SAL) LawNet Legal Research APIs
-  description: APIs for searching cases and obtaining full text of cases in LawNet.
-  version: 1.0 (For Marketing Purposes)
+  description: LawNet APIs is offered by the Singapore Academy of Law, which runs LawNet, a website that provides a Legal Research service to over 80% of Singapore’s legal profession. For more details, please refer to https://github.com/legaltechsal/LawNet-APIs. This OpenAPI document is made by Lex Quanta as a community contribution.
+  version: '1.0'
 tags:
   - name: Searching
-    description: APIs relating to searching for cases within the LawNet Legal Research module.
+    description: This API allows you to search for cases within the LawNet Legal Research module.
   - name: Retrieving Content
-    description: APIs relating to retrieving content within the LawNet Legal Research module.
+    description: This API allows you to retrieve content within the LawNet Legal Research.
 paths:
   /v1-search/search:
     post:
       tags:
         - Searching
-      summary: Search for cases within the LawNet Legal Research module.
       description: Use POST query parameters to specify the cases wanted. By default, the response will be returned in XML form with parsed parts.
       requestBody:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/searchingRequest'
-            example: |
-              cURL:curl -X POST \
-                  {{base url}}/v1-search/search \
-                  -H 'Content-Type:application/x-www-form-urlencoded' \
-                  -H 'cache-control:no-cache' \
-                  -H 'x-api-key:{{API KEY}}' \
-                  -d ‘apikey={{API KEY}}&cats={{Level 1 code}}&l2cats={{Level 2 code}}&l3cats={{Level 3 code}}&searchTerm=sample&page=1&maxperpage=15&orderBy=date-des&surroundingWords=5'
-              
-              C# (RestSharp):
-                var client = new RestClient(“{{base url}}/v1-search/search");
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("cache-control", "no-cache");
-                request.AddHeader("x-api-key", "{{API KEY}}");
-                request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-                request.AddParameter("undefined", “apikey={{API KEY}}&cats={{Level 1 code}}&l2cats={{Level 2 code}}&l3cats={{Level 3 code}}&searchTerm=sample&page=1&maxperpage=15&orderBy=date-des&surroundingWords=5”, ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-              
-              Java (Unirest):
-                HttpResponse<String> response = Unirest.post("{{base url}}/v1-search/search")
-                  .header("Content-Type", "application/x-www-form-urlencoded")
-                  .header("x-api-key", "{{API KEY}}")
-                  .header("cache-control", "no-cache")
-                  .body("apikey={{API KEY}}&cats={{Level 1 code}}&l2cats={{Level 2 code}}&l3cats={{Level 3 code}}&searchTerm=sample&page=1&maxperpage=15&orderBy=date-des&surroundingWords=5")
-                  .asString();
+              $ref: '#/components/schemas/searchRequest'
+            example:
+              apikey: '{{API KEY}}'
+              cats: r1
+              l2cats: r1c1,r1c2,r1c3
+              l3cats: '#r1c1,#r1c2,#r1c3'
+              searchTerm: sample
+              page: 1
+              maxperpage: 15
+              orderBy: date-des
+              surroundingWords: 5
       responses:
         '200':
           description: Success - Search results or full text of content returned.
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/Search%20Results'
+                $ref: '#/components/schemas/searchResponse'
               example: |
                 <searchStatistic>
                   <total>100</total>
@@ -105,45 +90,26 @@ paths:
     post:
       tags:
         - Retrieving Content
-      summary: Retrieve content within the LawNet Legal Research.
       description: Use POST query parameters to specify the cases wanted. By default, the response will be returned in XML form with parsed parts.
       requestBody:
         content:
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/retrievingRequest'
-            example: |
-              cURL:
-                curl -X POST \
-                  {{base url}}/v1-content/content \
-                  -H 'Content-Type:application/x-www-form-urlencoded' \
-                  -H 'cache-control:no-cache' \
-                  -H 'x-api-key:{{API KEY}}' \
-                  -d ‘apikey={{API KEY}}&cats={{Level 1 code}}&l2cats={{Level 2 code}}&l3cats={{Level 3 code}}&docUrl=%2Fsample group%2Fsample 1.xml&format=xml'
-              
-              C# (RestSharp):
-                var client = new RestClient("{{base url}}/v1-content/content");
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("cache-control", "no-cache");
-                request.AddHeader("x-api-key", "{{API KEY}}");
-                request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-                request.AddParameter("undefined",”apikey={{API KEY}}&cats={{Level 1 code}}&l2cats={{Level 2 code}}&l3cats={{Level 3 code}}&docUrl=%2Fsample group%2Fsample 1.xml&format=xml”, ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-              
-              Java (Unirest):
-                HttpResponse<String> response = Unirest.post("{{base url}}/v1-content/content")
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .header("x-api-key", "{{API KEY}}")
-                .header("cache-control", "no-cache")
-                .body(“apikey={{API KEY}}&cats={{Level 1 code}}&l2cats={{Level 2 code}}&l3cats={{Level 3 code}}&docUrl=%2Fsample group%2Fsample 1.xml&format=xml)
-                .asString();
+              $ref: '#/components/schemas/retrieveRequest'
+            example:
+              apikey: '{{API KEY}}'
+              cats: r1
+              l2cats: r1c1,r1c2,r1c3
+              l3cats: '#r1c1,#r1c2,#r1c3'
+              docUrl: /sample group/sample 1.xml
+              format: xml
       responses:
         '200':
           description: Success - Search results or full text of content returned.
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/content'
+                $ref: '#/components/schemas/retrieveResponse'
               example: |
                 <searchResponse>
                   <supportingfiles>
@@ -168,8 +134,13 @@ paths:
         '5XX':
           description: Server Errors - Something is wrong on our end.
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
   schemas:
-    searchingRequest:
+    searchRequest:
       properties:
         apikey:
           description: API Key allocated by SAL
@@ -199,8 +170,9 @@ components:
           type: integer
           default: 10
         orderBy:
-          description: Ordering of search result using following value [title-asc, title-des, date-asc, date-des, relevance].
+          description: Ordering of search result using following value
           type: string
+          enum: [title-asc, title-des, date-asc, date-des, relevance]
           default: relevance
       required:
         - apikey
@@ -208,7 +180,7 @@ components:
         - l2cats
         - l3cats
         - searchTerm
-    Search Results:
+    searchResponse:
       properties:
         searchResponse:
           properties:
@@ -225,58 +197,67 @@ components:
               properties:
                 resultList:
                   description: Multiple result of document content containing the search term.
-                  properties:
-                    result:
-                      description: Information on each search items.
-                      properties:
-                        documentId:
-                          description: Document URL. Note:The value in this node will be used for retrieving content.
-                          type: string
-                        document:
-                          description: Title and citation details.
-                          properties:
-                            Title:
-                              description: Title of the document.
-                              type: string
-                            Citation:
-                              description: Citation of the document.
-                              type: string
-                        Format:
-                          description: Indication of document formats available (PDF and XML) - Yes/No.
-                          properties:
-                        relevance:
-                          description: Relevance score of the document.
-                          type: integer
-                        category:
-                          description: Category assigned to the document.
-                          type: string
-                        documentTooltipHolder:
-                          description: List of document metadata.
-                        casereference:
-                          description: Indicates the precedential value of the document according to the annotations.
-                          properties:
-                            following:
-                              description: This is used to denote that the principle of law established in the instant case (or the dictum referred to) has been applied in subsequent cases.
-                              type: integer
-                            referring:
-                              description: This is used to describe cases which make only a general reference to the instant case.
-                              type: integer
-                            distinguishing:
-                              description: This is used where the instant case is not applied in subsequent cases due to some distinction in the facts or in the law.
-                              type: integer
-                            notfollowing:
-                              description: This is used where the court in subsequent cases has consciously refused to follow the instant case although potentially relevant. It implies that the instant case is wrong.
-                              type: integer
-                            overruling:
-                              description: This is used only where a higher court with the power to overrule has held the instant case to be wrong.
-                              type: integer
-                        snippets:
-                          description: Multiple snippets of document content containing the search term.
-                          properties:
-                            snippet:
-                              description: A snippet of document content containing the search term.
-                              type: string
-    retrievingRequest:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      result:
+                        description: Information on each search items.
+                        properties:
+                          documentId:
+                            description: Document URL. Note:The value in this node will be used for retrieving content.
+                            type: string
+                          document:
+                            description: Title and citation details.
+                            properties:
+                              Title:
+                                description: Title of the document.
+                                type: string
+                              Citation:
+                                description: Citation of the document.
+                                type: string
+                          Format:
+                            description: Indication of document formats available.
+                            properties:
+                              xml:
+                                type: string
+                                enum: [Yes, No]
+                              pdf:
+                                type: string
+                                enum: [Yes, No]
+                          relevance:
+                            description: Relevance score of the document.
+                            type: integer
+                          category:
+                            description: Category assigned to the document.
+                            type: string
+                          documentTooltipHolder:
+                            description: List of document metadata.
+                          casereference:
+                            description: Indicates the precedential value of the document according to the annotations.
+                            properties:
+                              following:
+                                description: This is used to denote that the principle of law established in the instant case (or the dictum referred to) has been applied in subsequent cases.
+                                type: integer
+                              referring:
+                                description: This is used to describe cases which make only a general reference to the instant case.
+                                type: integer
+                              distinguishing:
+                                description: This is used where the instant case is not applied in subsequent cases due to some distinction in the facts or in the law.
+                                type: integer
+                              notfollowing:
+                                description: This is used where the court in subsequent cases has consciously refused to follow the instant case although potentially relevant. It implies that the instant case is wrong.
+                                type: integer
+                              overruling:
+                                description: This is used only where a higher court with the power to overrule has held the instant case to be wrong.
+                                type: integer
+                          snippets:
+                            description: Multiple snippets of document content containing the search term.
+                            properties:
+                              snippet:
+                                description: A snippet of document content containing the search term.
+                                type: string
+    retrieveRequest:
       properties:
         apikey:
           description: API Key Allocated.
@@ -291,7 +272,7 @@ components:
           description: List of Content Subcategories. For multiple, please use comma separated values.
           type: string
         docUrl:
-          description: Document URL is only available in the Search Response. Example:<documentId>/Sample Group/sample1.xml</documentId>)
+          description: Document URL is only available in the Search Response. (Example:\<documentId>/Sample Group/sample1.xml\</documentId>)
           type: string
         Format:
           description: Format of content. Note:The format XML or PDF will be used to retrieve the entitled document content.
@@ -302,7 +283,7 @@ components:
         - l2cats
         - l3cats
         - docUrl
-    content:
+    retrieveResponse:
       properties:
         searchResponse:
           properties:
@@ -317,22 +298,27 @@ components:
                   type: object
             supportingFiles:
               description: Multiple supporting files. (Example:images)
-              properties:
-                supporting:
-                  description: Filename and binary.
-                  properties: 
-                    image:
-                      description: Details of a file.
-                      properties:
-                        title:
-                          description: Name of the file.
-                          type: string
-                        binary:
-                          description: Binary format of the images. Note:developers will be required to convert to physical files programmatically.
-                          type: object
+              type: array
+              items:
+                properties:
+                  supporting:
+                    type: object
+                    description: Filename and binary.
+                    properties: 
+                      image:
+                        description: Details of a file.
+                        properties:
+                          title:
+                            description: Name of the file.
+                            type: string
+                          binary:
+                            description: Binary format of the images. Note:developers will be required to convert to physical files programmatically.
+                            type: object
             Copyright:
               description: Copyright statement.
               type: string
             mainContent:
               description: Body content of the document. (XML/HTML+CSS)
               type: object
+security:
+  - ApiKeyAuth: []
