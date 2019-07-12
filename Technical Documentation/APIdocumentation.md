@@ -442,7 +442,7 @@ System.IO.File.WriteAllBytes(@"C:\Projects\hello.pdf", bytes);
 
 Q: What is the API request limit set to my account?
 <br>
-A: Each account is entitled to 100,000 per month API requests. . 
+A: During the 90-day trial access period, the number of API calls are capped at 5 calls per second. 
 
 <br>
 
