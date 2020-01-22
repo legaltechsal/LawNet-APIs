@@ -16,8 +16,6 @@ LawNet APIs is offered by the Singapore Academy of Law, which runs [LawNet](http
 
 <br> 
 
-<br> 
-
 ### What can be done with this? 
 
 With these APIs, you and your team will be able to develop and create legal technology solutions powered by LawNet and its rich database of legal content, or enhance your own services with LawNet content. 
@@ -26,19 +24,11 @@ You can refer to this [developer’s guide](https://github.com/legaltechsal/LawN
 
 <br> 
 
-<br>  
-
 ### How do I get access to LawNet APIs? 
 
 To use our APIs, you will need to obtain an API key and data entitlement from us. Register [here](https://apiportal.sal.sg/portal) for the trial access where we can determine if your use will be suitable for the production APIs.  
 
 If you are interested in using the production APIs, please email the Legal Technology Vision Programme Office at legaltechvision@sal.org.sg for more information or to request for production access. 
-
-<br> 
-
-<img src="/Technical Documentation/Access to APIs process flow.png" alt="Access to APIs process flow"/> 
-
-<br> 
 
 <br> 
 
@@ -49,8 +39,6 @@ If you are interested in using the production APIs, please email the Legal Techn
 Click here to refer to the <a href="https://github.com/legaltechsal/LawNet-APIs/blob/master/Technical%20Documentation/LawNet%20APIs%20T%26Cs.pdf">Terms and Conditions</a>. 
 
 <br> 
-
-<br>  
 
 ### What content is available for trial access? 
 
