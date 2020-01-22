@@ -30,7 +30,7 @@ You can refer to this [developer’s guide](https://github.com/legaltechsal/LawN
 
 ### How do I get access to LawNet APIs? 
 
-To use our APIs, you will need to obtain an API key and data entitlement from us. Register [here] for the trial access (https://apiportal.sal.sg/portal) where we can determine if your use will be suitable for the production APIs.  
+To use our APIs, you will need to obtain an API key and data entitlement from us. Register [here](https://apiportal.sal.sg/portal) for the trial access where we can determine if your use will be suitable for the production APIs.  
 
 If you are interested in using the production APIs, please email the Legal Technology Vision Programme Office at legaltechvision@sal.org.sg for more information or to request for production access. 
 
